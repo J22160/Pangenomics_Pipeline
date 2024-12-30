@@ -118,7 +118,7 @@ For HPC environments, use a job scheduler like Slurm to submit the pipeline as a
 #SBATCH --partition=compute  
 
 module load conda  
-conda activate pangenomics_env  
+conda activate pangenomics_pipeline  
 
 salloc -c 16 snakemake --sdm conda --cores $SLURM_NTASKS  
 ```
