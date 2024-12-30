@@ -1,0 +1,102 @@
+# ================================================================================
+#                   Configuration File: Pangenomics Pipeline
+# ================================================================================
+#
+#   Description:
+#   This configuration file specifies the input directories, parameters, and 
+#   settings for various stages of the Pangenomics and pantranscriptomics pipeline,
+#   including preprocessing, hybrid assembly, annotation, pangenome analysis, 
+#   and transcriptomics. Modify the values as needed to customize the pipeline for 
+#   your dataset.
+#
+# ================================================================================
+# Input Directories
+# ================================================================================
+SHORT_READ_DIRECTORY: "path/to/input/short_read/data"  # Path to short-read input data
+LONG_READ_DIRECTORY: "path/to/input/long_read/data"    # Path to long-read input data
+
+# ================================================================================
+# Trimming Parameters
+# ================================================================================
+fastp:  
+    qualified_quality_phred: 33        # Minimum Phred quality score for trimming. 
+                                       # Options: Any integer ≥25.
+    mean_quality: 30                   # Minimum average quality per read. 
+                                       # Options: Any integer ≥25.
+    length_required: 100               # Minimum read length after trimming. 
+                                       # Options: Any integer > 0.
+
+# ================================================================================
+# Hybrid Assembly Settings
+# ================================================================================
+hybrid_assembly:  
+    keep: 0                            # Level of file retention (default: 1) 
+                                       # Options:
+                                       #  0 = only keep final files: assembly (FASTA, GFA and log),
+                                       #  1 = also save graphs at main checkpoints,
+                                       #  2 = also keep SAM (enables fast rerun in different mode),
+                                       #  3 = keep all temp files and save all graphs (for debugging)
+    verbosity: 2                       # Level of stdout and log file information (default: 1)
+                                       # Options:        
+                                       #  0 = no stdout
+                                       #  1 = basic progress indicators 
+                                       #  2 = extra info
+                                       #  3 = debugging info
+# ================================================================================
+# Genome Annotation Settings
+# ================================================================================
+prokka_annotation:  
+    genus: streptococcus               # Genus for annotation. 
+                                       # Options: Any valid genus name (e.g., Streptococcus).
+    species: pneumoniae                # Species for annotation.
+                                       # Options: Any valid species name (e.g., pneumoniae).
+    cpus: 8                            # Number of CPUs for Prokka annotation. 
+                                       # Options: Any integer ≥1.
+
+# ================================================================================
+# Pangenome Analysis Parameters
+# ================================================================================
+pangenome_analysis:  
+      clean_mode: strict               #{strict,moderate,sensitive}
+                                       # The stringency mode at which to run panaroo. Must be
+                                       # one of 'strict','moderate' or 'sensitive'. Each of
+                                       # these modes can be fine tuned using the additional
+                                       # parameters in the 'Graph correction' section.
+
+                                       # strict:
+                                       # Requires fairly strong evidence (present in  at least
+                                       # 5% of genomes) to keep likely contaminant genes. Will
+                                       # remove genes that are refound more often than they were
+                                       # called originally.
+
+                                       # moderate:
+                                       # Requires moderate evidence (present in  at least 1% of
+                                       # genomes) to keep likely contaminant genes. Keeps genes
+                                       # that are refound more often than they were called
+                                       # originally.
+
+                                       # sensitive:
+                                       # Does not delete any genes and only performes merge and
+                                       # refinding operations. Useful if rare plasmids are of
+                                       # interest as these are often hard to disguish from
+                                       # contamination. Results will likely include  higher
+                                       # number of spurious annotations.
+    core_threshold: 0.95               # Percentage threshold to define core genes 
+                                       # Options: Any integer between 0.50-0.99
+    cpus: 8                            # Number of CPUs for pangenome analysis 
+                                       # Options: Any integer ≥1
+
+# ================================================================================
+# Transcript Abundance Quantification
+# ================================================================================
+salmon:  
+    column: tpm                        # Column type for expression data. 
+                                       # Options:
+                                       # len, elen, tpm, numreads
+
+# ================================================================================
+# Notes:
+# - Ensure that all paths and parameters match your project setup.
+# - Use the defined options to optimize the pipeline based on your computational 
+#   resources and data characteristics.
+# ================================================================================
