@@ -47,7 +47,7 @@ This pipeline has been successfully applied in the study of *Streptococcus pneum
 ---  
 
 ## **Pangenomics Pipeline Workflow**  
- ![alt text](https://github.com/J22160/RGENE/blob/759ab1f69ed6accdf6c2ebc8b4b3dd878fa097cf/Pangenome.jpeg.jpg)
+ ![alt text](https://github.com/J22160/RGENE/blob/bc0f30c8b8361d1f8c513b88dec9025f9b9748c3/Pangenome.jpg)
 ---  
 
 ## **Setup and Usage**  
